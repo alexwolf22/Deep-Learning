@@ -7,4 +7,4 @@
 ####To Be added by end of February
 1. Convolutional Neural Netowork
 2. Recurrent Neural Network
-   -Natural Language Processing
+3. Natural Language Processing
