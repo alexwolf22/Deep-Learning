@@ -1,10 +1,10 @@
-function dagnn_net = cnn_categorization_base(netspec_opts, train_opts, class_names)
+function dagnn_net = cnn_categorization_advanced(netspec_opts, train_opts, class_names)
 
 % Create an instance of the dagnn class
 dagnn_net= dagnn.DagNN();
 
 % Specify the input size
-dagnn_net.meta.inputSize= [32, 32, 3];
+dagnn_net.meta.inputSize= [30, 30, 3];
 
 % Set up the model based on netspec_opts
 kSize= netspec_opts.kernel_size;
@@ -24,6 +24,7 @@ for i=1:L
     
     %add conv layer
     if strcmp(type, 'conv')
+        
         ksizeW= kSize(1, i);
         ksizeH= kSize(2, i);
         numfilt= numFilts(i);
@@ -60,7 +61,7 @@ for i=1:L
         numChan=numFilts(i);
         
         dagnn_net.addLayer(layer_name, ...
-            dagnn.BatchNorm('numChannels', numChan, 'epsilon', 1e-5),...
+            dagnn.BatchNorm('numChannels', numChan, 'epsilon', .00001),...
             prevName,...
             layer_name,...
             params);
@@ -68,8 +69,8 @@ for i=1:L
     
     %add Rectified Linear Unit Layer
     if strcmp(type, 'relu')
-        
         index4name=index4name+1;
+        
         dagnn_net.addLayer(layer_name, ...
             dagnn.ReLU(),...
             prevName,...
@@ -111,7 +112,7 @@ params= {wParam, bParam};
 
 prevLayerFilt=0;
 if i~=1
-    prevLayerFilt= 64;
+    prevLayerFilt= 256;
 end
 
 dagnn_net.addLayer(layer_name, ...
@@ -138,6 +139,6 @@ dagnn_net.meta.trainOpts = train_opts;
 
 % Initialize the parameters of your model
 dagnn_net.initParams();
+    
+end
 
-
-         

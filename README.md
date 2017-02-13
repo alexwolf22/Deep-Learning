@@ -5,7 +5,6 @@
 1. Feed Forward Neural Netowork
 2. Image Classification using CNN
 
-####To Be added by end of February
-1. More Convolutional Neural Netoworks
-2. Recurrent Neural Network
-3. Natural Language Processing
+####To Be added by March 8th
+1. Fully Connected CNN for Semantic Segmentation
+2. Recurrent Neural Network for Natural Langage Processing

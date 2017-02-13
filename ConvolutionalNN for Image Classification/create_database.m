@@ -35,10 +35,12 @@ trainIndexsfull= trainIndexsfull .* trainIndexs;
 Logical=logical(trainIndexsfull);
 trainD= trainValD(Logical);
 trainD= reshape(trainD, [], sum(trainIndexs));
+trainD= trainD';
+trainValD=trainValD';
+means=mean(trainD);
 
 %find and subtract means for traina nd val data
-means= mean(trainD, 2);
-trainValD= trainValD- means;
+trainValD=bsxfun(@minus, trainValD, means)';
 
 means= reshape(means, h, w, k);
 trainValD= reshape(trainValD, h, w, k, t1);
@@ -73,7 +75,7 @@ database= struct('images', images, 'meta', meta, 'normalization', norm);
 if opts.contrastNormalization
     z = reshape(database.images.data,[],total_examples) ;
     % SAseVE
-    n = std(z,0,1) ;
+    n = std(z,0,2) ;
     database.normalization.std_dev = n;
 
     z = bsxfun(@times, z, mean(n) ./ max(n, row_size)) ;
